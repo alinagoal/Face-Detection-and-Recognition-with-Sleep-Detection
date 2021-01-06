@@ -12,6 +12,7 @@ import time
 import tkinter.ttk as ttk
 import tkinter.font as font
 import os
+import smtplib
 
 
 window = tk.Tk()
@@ -245,6 +246,17 @@ def getImagesAndLabels(path):
         Ids.append(Id)        
     return faces,Ids
 
+def sendEmail(emailList):     
+    for dest in emailList: 
+        myEmail = "lumtee123@gmail.com"
+        myPassword = "loveyourlife12345"
+        s = smtplib.SMTP('smtp.gmail.com', 587) 
+        s.starttls() 
+        s.login(myEmail, myPassword) 
+        message = "Your child is absent"
+        s.sendmail(myEmail, dest, message) 
+        s.quit() 
+
 def TrackImages():
     recognizer = cv2.face.LBPHFaceRecognizer_create()#cv2.createLBPHFaceRecognizer()
     recognizer.read(r"D:\drowsy\python_env\FaceTrain\TrainingImageLabel\Trainner.yml")
@@ -307,6 +319,12 @@ def TrackImages():
     
     cam.release()
     cv2.destroyAllWindows()
+
+    # read csv file and send mail
+    # -> open attendance-{data}-{time}.csv
+    # -> sendEmail(emailList)
+    emailList = ["adangol@sevadev.com", "alidangol71@gmail.com"]
+    sendEmail(emailList)
     os.system("python dr.py")
     #print(attendance)
     res=attendance
