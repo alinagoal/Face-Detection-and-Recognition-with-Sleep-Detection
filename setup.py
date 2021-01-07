@@ -30,4 +30,3 @@ setup(
     executables = executables
 )
 
-#write python setup build

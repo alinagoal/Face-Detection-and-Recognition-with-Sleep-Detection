@@ -16,7 +16,7 @@ import os
 import smtplib
 
 window = tk.Tk()
-#helv36 = tk.Font(family='Helvetica', size=36, weight='bold')
+
 window.title("Face_Recogniser")
 window.iconbitmap("")
 
@@ -24,16 +24,8 @@ img1=ImageTk.PhotoImage(Image.open("images/back3.jpg"))
 my_label=Label(image=img1)
 my_label.pack()
 
-
-
-#dialog_title = 'QUIT'
-#dialog_text = 'Are you sure?'
-#answer = messagebox.askquestion(dialog_title, dialog_text)
- 
 window.geometry('1280x720')
 window.configure(background='white')
-
-#window.attributes('-fullscreen', True)
 
 window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(0, weight=1)
@@ -41,40 +33,10 @@ window.grid_columnconfigure(0, weight=1)
 message = tk.Label(window, text="Student Attendance based on Face Recognition" ,bg="#F0BE2E"  ,fg="black"  ,width=60  ,height=2,font=('times', 15, ' italic bold')) 
 message.place(x=300, y=30)
 
-#path = "profile.jpg"
-
-#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-#img = ImageTk.PhotoImage(Image.open(path))
-
-#The Label widget is a standard Tkinter widget used to display a text or image on the screen.
-#panel = tk.Label(window, image = img)
-
-
-#panel.pack(side = "left", fill = "y", expand = "no")
-
-#cv_img = cv2.imread("img541.jpg")
-#x, y, no_channels = cv_img.shape
-#canvas = tk.Canvas(window, width = x, height =y)
-#canvas.pack(side="left")
-#photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(cv_img)) 
-# Add a PhotoImage to the Canvas
-#canvas.create_image(0, 0, image=photo, anchor=tk.NW)
-
-#msg = Message(window, text='Hello, world!')
-
-# Font is a tuple of (font_family, size_in_points, style_modifier_string)
-
-
 def register():
     top = tk.Tk()
-    #helv36 = tk.Font(family='Helvetica', size=36, weight='bold')
     top.title("Registration")
 
-    
-    #answer = messagebox.askquestion(dialog_title, dialog_text)
- 
-    #top.configure(background='#CCCCFF')
-   
     top.geometry('1280x720')
     top.configure(background='white')
 
@@ -83,10 +45,6 @@ def register():
     top.grid_columnconfigure(0, weight=1)
     top_frame = Label(top, text='Student Registration',font = ('times', 15, 'italic bold'), bg='#F0BE2E',relief='groove',height=2,width=79)
     top_frame.pack(side='top')
-    #message = tk.Label(top, text="Student Registration" ,bg="#F0BE2E"  ,fg="black"  ,width=40  ,height=2,font=('times', 15, 'italic bold')) 
-    #message.place(x=300, y=30)
-
-    
     
     lbl = tk.Label(top, text="Enter ID",width=20  ,height=2  ,fg="black"  ,bg="#F0BE2E" ,font=('times', 12, ' bold ') ) 
     lbl.place(x=200, y=100)
@@ -371,12 +329,5 @@ quitWindow.place(x=900, y=450)
 img5=ImageTk.PhotoImage(Image.open("images/regis3.jpg"))
 register_info= tk.Button(window,text="Register",image=img5, command=register,font=('times', 12, ' bold '))
 register_info.place(x=110, y=150)
-
-#copyWrite = tk.Text(window, background=window.cget("background"), borderwidth=0,font=('times', 30, 'italic bold underline'))
-#copyWrite.tag_configure("superscript", offset=10)
-#copyWrite.insert("insert", "Developed by Ashish","", "TEAM", "superscript")
-#copyWrite.configure(state="disabled",fg="red"  )
-#copyWrite.pack(side="left")
-#copyWrite.place(x=800, y=750)
  
 window.mainloop()

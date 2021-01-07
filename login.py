@@ -6,13 +6,9 @@ import time
 import datetime
 import os
 
-#def main():
-	#tip=Tk()
-	#app=Login_System(tip)
-
 class Login_System:
 	def __init__(self, root):
- 		#super(Login_System, self).__init__()
+ 		
  		self.root=root
  		self.root.title("Login Page")
  		self.root.geometry("1350x700+0+0")
@@ -47,16 +43,14 @@ class Login_System:
 
  		btn_log =Button(Login_Frame,text="Login",width=15,command=self.login,font=("Arial Narrow", 14, "bold"),bg="#A15A4B",fg="#F0E211").place( x=30,y=337)
 
- 		#Quit=Button(Login_Frame,text="Quit", width=10, command=self.Quit,font=("Times",12, "bold"),bg="black", fg="white",relief=GROOVE).grid( row=3,column=2, pady=10)
-                
  		btn_reset=Button(Login_Frame,text="Reset",width=15,command=self.reset,font=("Arial Narrow", 14, "bold"),bg="#A15A4B",fg="#F0E211").grid( row=3,column=1, pady=10)
 
 
 	def login(self):
  		if (self.uname.get())=="Alilum" and (self.pass_.get())=="123456":
- 			#self.newWindow = Toplevel(self.root)
+ 			
  			os.system("python train.py")
- 			#self.app = Window2(self.newWindow)
+ 			
  		elif (self.uname.get())=="" or (self.pass_.get())=="":
  			ms.showerror("Error", "All fields are required!!")
  		else:
@@ -66,30 +60,7 @@ class Login_System:
 	def reset(self):
  		self.uname.set("")
  		self.pass_.set("")
- 		#self.txtuser.focus()
-
-
-	#def new_window(self):
- 		#self.newWindow=Toplevel(self.root)
- 		#self.app= Window2(self.newWindow)
- 		#self.root.geometry("1350x700+0+0")
-  
-
-
-#class Window2: 
-	#def _init_(self,root):
-		#self.root=root
-		#self.root.title("Main Page")
-		#self.root.geometry("1350x700+0+0")
-		
-
-
- 	#def Quit(self):
- 		#response=ms.askokcancel('Exit!', 'Do you really want to exit?')
- 		#if response ==1:
- 			#root.destroy()
- 		#else:
- 			#pass
+ 		
 
 
 root=Tk()

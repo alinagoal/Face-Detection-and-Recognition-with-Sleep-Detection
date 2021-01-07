@@ -1,4 +1,3 @@
-#!/usr/bin/python
 from __future__ import division
 import dlib
 from imutils import face_utils
@@ -27,12 +26,13 @@ def resize(img, width=None, height=None, interpolation=cv2.INTER_AREA):
         height = int(h * ratio)
         resized = cv2.resize(img, (height, width), interpolation)
         return resized
-######
+
 def shape_to_np(shape, dtype="int"):
     coords = np.zeros((68, 2), dtype=dtype)
     for i in range(36,48):
         coords[i] = (shape.part(i).x, shape.part(i).y)
     return coords
+
 def eye_aspect_ratio(eye):
     A = dist.euclidean(eye[1], eye[5])
     B = dist.euclidean(eye[2], eye[4])
@@ -47,15 +47,8 @@ def eye_aspect_ratio(eye):
 	# return the eye aspect ratio
     return ear
 camera = cv2.VideoCapture(0)
-
 predictor_path = 'shape_predictor_68_face_landmarks.dat'
-
-
-# detector = dlib.get_frontal_face_detector() # Use the face extractor provided by the dlib library
-# predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
-
 detector = dlib.get_frontal_face_detector()
-# detector = dlib.get_frontal_face_detector.create()
 predictor = dlib.shape_predictor(predictor_path)
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
@@ -70,9 +63,6 @@ while True:
     frame_grey = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     frame_resized = resize(frame_grey, width=120)
 
-# Ask the detector to find the bounding boxes of each face. The 1 in the
-# second argument indicates that we should upsample the image 1 time. This
-# will make everything bigger and allow us to detect more faces.
     dets = detector(frame_resized, 1)
     
     if len(dets) > 0:
