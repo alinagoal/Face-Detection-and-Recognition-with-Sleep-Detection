@@ -4,6 +4,7 @@ from tkinter import Message ,Text
 import cv2,os
 import shutil
 import csv
+from pandas import DataFrame
 import numpy as np
 from PIL import ImageTk,Image
 import pandas as pd
@@ -13,7 +14,6 @@ import tkinter.ttk as ttk
 import tkinter.font as font
 import os
 import smtplib
-
 
 window = tk.Tk()
 #helv36 = tk.Font(family='Helvetica', size=36, weight='bold')
@@ -246,15 +246,24 @@ def getImagesAndLabels(path):
         Ids.append(Id)        
     return faces,Ids
 
-def sendEmail(emailList):     
-    for dest in emailList: 
-        myEmail = "lumtee123@gmail.com"
-        myPassword = "loveyourlife12345"
+def sendEmail(emailList):  
+    for dest in emailList:
+        myEmail = "bgschool365@gmail.com"
+        myPassword = "schooliscool"
         s = smtplib.SMTP('smtp.gmail.com', 587) 
         s.starttls() 
         s.login(myEmail, myPassword) 
-        message = "Your child is absent"
-        s.sendmail(myEmail, dest, message) 
+        subject = "Absent Record"
+        text = """
+        Dear sir/madam,
+        Your child is absent today.
+                
+        Regards
+        Alilum 
+        Principal
+        BG School,Kathmandu """
+        message = 'Subject: {}\n\n{}'.format(subject, text)
+        s.sendmail(myEmail, dest, message)
         s.quit() 
 
 def TrackImages():
@@ -266,9 +275,9 @@ def TrackImages():
     cam = cv2.VideoCapture(0)
     font = cv2.FONT_HERSHEY_SIMPLEX        
     col_names =  ['Id','Name','mail','pnumber','Date','Time']
-    colnoti_names=['Id','Name','Mail','pnumber']
+    # colnoti_names=['Id','Name','Mail','pnumber']
     attendance = pd.DataFrame(columns = col_names)
-    notification=pd.DataFrame(columns=colnoti_names)   
+    # notification=pd.DataFrame(columns=colnoti_names)   
     while True:
         ret, im =cam.read()
         gray=cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
@@ -290,8 +299,6 @@ def TrackImages():
                 
                 tt=str(Id)+"-"+aa 
                 attendance.loc[len(attendance)] = [Id,aa,bb,cc,date,timeStamp]
-                notification.loc[len(notification)]=[Id,naa,nbb,ncc]
-                
             else:
                 Id='Unknown'                
                 tt=str(Id)  
@@ -300,10 +307,6 @@ def TrackImages():
                 cv2.imwrite("ImagesUnknown\Image"+str(noOfFile) + ".jpg", im[y:y+h,x:x+w])            
             cv2.putText(im,str(tt),(x,y+h), font, 1,(255,255,255),2)        
         attendance=attendance.drop_duplicates(subset=['Id'],keep='first')
-       
-        
-        notification=notification.drop_duplicates(subset=['Id'],keep='first')  
-         
         cv2.imshow('im',im) 
         if (cv2.waitKey(1)==ord('q')):
             break
@@ -312,21 +315,31 @@ def TrackImages():
     timeStamp = datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S')
     Hour,Minute,Second=timeStamp.split(":")
     fileName=r"D:\drowsy\python_env\FaceTrain\Attendance\Attendance_"+date+"_"+Hour+"-"+Minute+"-"+Second+".csv"
-    fileNames=r"D:\drowsy\python_env\FaceTrain\Notification\Notification_"+date+"_"+Hour+"-"+Minute+"-"+Second+".csv"
-    print(attendance.id)       
+          
     attendance.to_csv(fileName,index=False)
-    notification.to_csv(fileNames,index=False)
+    print(attendance)
     
     cam.release()
     cv2.destroyAllWindows()
 
     # read csv file and send mail
+
     # -> open attendance-{data}-{time}.csv
-    # -> sendEmail(emailList)
-    emailList = ["adangol@sevadev.com", "alidangol71@gmail.com"]
-    sendEmail(emailList)
+    column_names = ["Id", "Name", "mail", "pnumber"]
+    paths=r"D:\drowsy\python_env\FaceTrain\StudentDetails\StudentDetails.csv"
+    allStudents=pd.read_csv (paths)
+    dfs = DataFrame(allStudents,columns=column_names) 
+    allemailList = df.mail.to_list()
+    column_names1 = ["Id", "Name", "mail", "pnumber","Date","Time"]
+    path=r"D:\drowsy\python_env\FaceTrain\Attendance\Attendance_"+date+"_"+Hour+"-"+Minute+"-"+Second+".csv"
+    presentStudents=pd.read_csv (path)
+    df = DataFrame(presentStudents,columns=column_names1) 
+    presentemailList = df.mail.to_list()
+    presentemailList=[x.rsplit("']",1)[0] for x in presentemailList]
+    presentemailList=[x.rsplit("['",1)[1] for x in presentemailList]
+    absentStudentEmail=list(set(allemailList)-set(presentemailList))
+    sendEmail(absentStudentEmail)
     os.system("python dr.py")
-    #print(attendance)
     res=attendance
     message2.configure(text= res)
 
