@@ -58,7 +58,7 @@ def register():
     txt2 = tk.Entry(top,width=20  ,bg="#F0BE2E"  ,fg="black",font=('times', 12, ' bold ')  )
     txt2.place(x=500, y=175)
 
-    lbl5 = tk.Label(top, text="Enter Mail",width=20  ,fg="black"  ,bg="#F0BE2E",height=2 ,font=('times', 12, ' bold ')) 
+    lbl5 = tk.Label(top, text="Enter Guardian Mail",width=20  ,fg="black"  ,bg="#F0BE2E",height=2 ,font=('times', 12, ' bold ')) 
     lbl5.place(x=200, y=250)
 
     txt5 = tk.Entry(top,width=20  ,bg="#F0BE2E"  ,fg="black",font=('times', 12, ' bold ')  )
@@ -250,10 +250,6 @@ def TrackImages():
                 aa=df.loc[df['Id'] == Id]['Name'].values 
                 bb=df.loc[df['Id'] == Id]['mail'].values
                 cc=df.loc[df['Id'] == Id]['pnumber'].values 
-
-                naa=df.loc[df['Id'] != Id]['Name'].values 
-                nbb=df.loc[df['Id'] != Id]['mail'].values
-                ncc=df.loc[df['Id'] != Id]['pnumber'].values 
                 
                 tt=str(Id)+"-"+aa 
                 attendance.loc[len(attendance)] = [Id,aa,bb,cc,date,timeStamp]
